@@ -1,27 +1,6 @@
-<table>
-<?php 
-
-
-    foreach ($_POST as $key => $value) {
-        echo "<tr>";
-        echo "<td>";
-        echo $key;
-        echo "</td>";
-        echo "<td>";
-        echo $value;
-        echo "</td>";
-        echo "</tr>";
-    }
-
-
-?>
-</table>
-
 <?
     
 require(dirname(__FILE__) . '/openpay/Openpay.php');
-
-echo "<h2>Test de Tienda</h2>";
 
 $openpay = Openpay::getInstance('mlttma1g0lusxgmm9kst', 'sk_43f66f9243264b61a2cb5bcdc172cca1');
 
@@ -38,8 +17,6 @@ $chargeData = array(
     'customer' => $customer);
 
 $charge = $openpay->charges->create($chargeData);
-?>
 
-<table>
-<?php print_r ($charge)?>
-</table>
+echo str_replace("\u0000*\u0000", "", json_encode((array)$charge));
+?>
