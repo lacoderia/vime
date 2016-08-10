@@ -1,0 +1,262 @@
+@font-face
+{
+   font-family: 'Futura Bk BT';
+   src: url('futura_book_bt-webfont.eot');
+   src: url('futura_book_bt-webfont.eot?#iefix') format('embedded-opentype'),
+        url('futura_book_bt-webfont.svg#futura_bk_btbook') format('svg'),
+        url('futura_book_bt-webfont.ttf') format('truetype'),
+        url('futura_book_bt-webfont.woff') format('woff');
+}
+@font-face
+{
+   font-family: 'Futura Md BT';
+   src: url('futura_heavy_bt-webfont.eot');
+   src: url('futura_heavy_bt-webfont.eot?#iefix') format('embedded-opentype'),
+        url('futura_heavy_bt-webfont.svg#futura_hv_btheavy') format('svg'),
+        url('futura_heavy_bt-webfont.ttf') format('truetype'),
+        url('futura_heavy_bt-webfont.woff') format('woff');
+}
+a
+{
+   color: #0000FF;
+   text-decoration: underline;
+}
+a:visited
+{
+   color: #800080;
+}
+a:active
+{
+   color: #FF0000;
+}
+a:hover
+{
+   color: #0000FF;
+   text-decoration: underline;
+}
+a.menu
+{
+   color: #888888;
+   text-decoration: none;
+   -webkit-transition: all 21ms ease-in-out;
+   -moz-transition: all 21ms ease-in-out;
+   -ms-transition: all 21ms ease-in-out;
+   transition: all 21ms ease-in-out;
+}
+a.menu:visited
+{
+   color: #888888;
+   text-decoration: none;
+}
+a.menu:active
+{
+   color: #1E988A;
+   font-weight: bold;
+   text-decoration: none;
+}
+a.menu:hover
+{
+   color: #1E988A;
+   font-weight: bold;
+   text-decoration: none;
+}
+h1
+{
+   font-family: "Open Sans";
+   font-size: 24px;
+   font-weight: normal;
+   font-style: normal;
+   text-decoration: none;
+   color: #030850;
+   background-color: transparent;
+   margin: 0px 0px 0px 0px;
+   padding: 0px 0px 0px 0px;
+   display: inline;
+}
+h2
+{
+   font-family: "Open Sans";
+   font-size: 37px;
+   font-weight: normal;
+   font-style: normal;
+   text-decoration: none;
+   color: #030850;
+   background-color: transparent;
+   margin: 0px 0px 0px 0px;
+   padding: 0px 0px 0px 0px;
+   display: inline;
+}
+h3
+{
+   font-family: "Open Sans";
+   font-size: 24px;
+   font-weight: normal;
+   font-style: normal;
+   text-decoration: none;
+   color: #030850;
+   background-color: transparent;
+   margin: 0px 0px 0px 0px;
+   padding: 0px 0px 0px 0px;
+   font-weight:800;
+}
+h4
+{
+   font-family: Arial;
+   font-size: 21px;
+   font-weight: normal;
+   font-style: italic;
+   text-decoration: none;
+   color: #000000;
+   background-color: transparent;
+   margin: 0px 0px 0px 0px;
+   padding: 0px 0px 0px 0px;
+   display: inline;
+}
+h5
+{
+   font-family: Arial;
+   font-size: 19px;
+   font-weight: normal;
+   font-style: normal;
+   text-decoration: none;
+   color: #000000;
+   background-color: transparent;
+   margin: 0px 0px 0px 0px;
+   padding: 0px 0px 0px 0px;
+   display: inline;
+}
+h6
+{
+   font-family: Arial;
+   font-size: 16px;
+   font-weight: normal;
+   font-style: normal;
+   text-decoration: none;
+   color: #000000;
+   background-color: transparent;
+   margin: 0px 0px 0px 0px;
+   padding: 0px 0px 0px 0px;
+   display: inline;
+}
+.CustomStyle
+{
+   font-family: "Courier New";
+   font-size: 16px;
+   font-weight: bold;
+   font-style: normal;
+   text-decoration: none;
+   color: #000080;
+   background-color: transparent;
+}
+.parrafo
+{
+   font-family: "Open Sans";
+   font-size: 15px;
+   font-weight: normal;
+   font-style: normal;
+   text-decoration: none;
+   color: #8C8C8C;
+   background-color: transparent;
+}
+.more
+{
+   font-family: "Open Sans";
+   font-size: 15px;
+   font-weight: normal;
+   font-style: normal;
+   text-decoration: none;
+   color: #4169E1;
+   background-color: transparent;
+}
+.nombres
+{
+   font-family: "Open Sans";
+   font-size: 15px;
+   font-weight: normal;
+   font-style: normal;
+   text-decoration: none;
+   color: #2F4F4F;
+   background-color: transparent;
+}
+.puesto
+{
+   font-family: "Open Sans";
+   font-size: 13px;
+   font-weight: normal;
+   font-style: italic;
+   text-decoration: none;
+   color: #A9A9A9;
+   background-color: transparent;
+}
+.citas
+{
+   font-family: "Open Sans";
+   font-size: 15px;
+   font-weight: normal;
+   font-style: italic;
+   text-decoration: none;
+   color: #8C8C8C;
+   background-color: transparent;
+}
+.copyright
+{
+   font-family: "Open Sans";
+   font-size: 12px;
+   font-weight: normal;
+   font-style: normal;
+   text-decoration: none;
+   color: #DCDCDC;
+   background-color: transparent;
+   font-weight: 200;
+}
+.Heading_1__h1__copy
+{
+   font-family: "Open Sans";
+   font-size: 24px;
+   font-weight: normal;
+   font-style: normal;
+   text-decoration: none;
+   color: #030850;
+   background-color: transparent;
+   margin: 0px 0px 0px 0px;
+   padding: 0px 0px 0px 0px;
+   font-weight: 800;
+}
+.menu:hover
+{
+   font-family: "Futura Md BT";
+   font-size: 20px;
+   font-weight: normal;
+   font-style: normal;
+   text-decoration: none;
+   color: #1E988A;
+   background-color: transparent;
+}
+.enviar
+{
+   font-family: "Futura Md BT";
+   font-size: 15px;
+   font-weight: normal;
+   font-style: normal;
+   text-decoration: none;
+   color: #FFFFFF;
+   background-color: #888888;
+   border: 1px #888888 solid;
+   -moz-border-radius: 100px;
+   -webkit-border-radius: 100px;
+   border-radius: 100px;
+}
+.enviar:hover
+{
+   font-family: "Futura Md BT";
+   font-size: 15px;
+   font-weight: normal;
+   font-style: normal;
+   text-decoration: none;
+   color: #FFFFFF;
+   background-color: #71D4C3;
+   border: 1px #71D4C3 solid;
+   -moz-border-radius: 100px;
+   -webkit-border-radius: 100px;
+   border-radius: 100px;
+}

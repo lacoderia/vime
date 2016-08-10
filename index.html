@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="es-mx">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>VIME | ¿Quiénes somos?</title>
+    <meta name="description" content="Conoce sobre nuestra clínica, nuestros especialistas y nuestro método efecto para reducir peso en semanas. Te ofrecemos una solución definitiva y duradera">
+    <meta name="keywords" content="metodo bajar kilos, doctor bajar peso, clinica df perder peso, bajar peso en semanas, que es vime, metodo vime">
+    <link href="favicon.ico" rel="shortcut icon">
+
+    <link href="css/Vime10.css" rel="stylesheet" type="text/css">
+    <link href="css/payments.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript"
+            src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
+    <script type='text/javascript'
+            src="https://openpay.s3.amazonaws.com/openpay-data.v1.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            OpenPay.setId('mlttma1g0lusxgmm9kst');
+            OpenPay.setApiKey('pk_25e9eff9fda645308badcfe65d175883');
+            OpenPay.setSandboxMode(true);
+            //Se genera el id de dispositivo
+            var deviceSessionId = OpenPay.deviceData.setup("payment-form", "deviceIdHiddenFieldName");
+
+            $('#pay-button').on('click', function(event) {
+                event.preventDefault();
+                $("#pay-button").prop( "disabled", true);
+                OpenPay.token.extractFormAndCreate('payment-form', sucess_callbak, error_callbak);
+            });
+
+            var sucess_callbak = function(response) {
+                var token_id = response.data.id;
+                $('#token_id').val(token_id);
+                $('#payment-form').submit();
+            };
+
+            var error_callbak = function(response) {
+                var desc = response.data.description != undefined ? response.data.description : response.message;
+                alert("ERROR [" + response.status + "] " + desc);
+                $("#pay-button").prop("disabled", false);
+            };
+
+        });
+    </script>
+
+</head>
+<body>
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK9DWP"
+                  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        '//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TK9DWP');</script>
+<!-- End Google Tag Manager -->
+
+<div id="masterLayer2" style="text-align:center;margin-top:5px;width:100%;height:132px;z-index:12;">
+    <div id="masterLayer2_Container" style="width:1300px;position:relative;margin-left:auto;margin-right:auto;text-align:left;">
+        <div id="wb_logovime" style="position:absolute;left:50px;top:14px;width:300px;height:98px;z-index:7;">
+            <a href="./index.html"><img src="images/Vime_logo.png" id="logovime" alt="VIME - Cl&#237;nica para bajar de peso"></a></div>
+        <div id="wb_masterCssMenu1" style="position:absolute;left:518px;top:84px;width:740px;height:28px;z-index:8;">
+            <ul>
+                <li class="firstmain"><a href="./index.html" target="_self">Inicio</a>
+                </li>
+                <li><a class="active" href="./quien-somos.html" target="_self">Acerca&nbsp;de&nbsp;VIME</a>
+                </li>
+                <li><a href="./tratamiento-bajar-peso.html" target="_self">Tratamiento</a>
+                </li>
+                <li><a href="./herramientas.html" target="_self">Herramientas</a>
+                </li>
+                <li><a href="./contacto.html" target="_self">Contacto/Ubicaci&#243;n</a>
+                </li>
+            </ul>
+            <br>
+        </div>
+    </div>
+</div>
+<div id="container">
+    <div id="wb_pagosImage1" style="margin-left:70px;margin-top:0px;width:1232px;height:426px;z-index:9;">
+        <img src="images/dieta_deliciosa.jpg" id="pagosImage1" alt="dieta para perder peso">
+    </div>
+</div>
+<div id="pagosLayer3" style="text-align:center;left:0px;margin-top:44px;width:100%;z-index:10;">
+    <div id="pagosLayer3_Container" style="width:1300px;position:relative;margin-left:auto;margin-right:auto;text-align:left;">
+
+        <div id="wb_pagosText1" style="margin-left:47px;width:503px;height:135px;text-align:right;z-index:3;">
+            <span style="color:#8c8c8c;font-family:'futura bk bt';font-size:37px;">Realiza pagos online.<br>¡Es rápido, sencillo y seguro!</span>
+        </div>
+
+        <div id="wb_pagosText2" style="width:540px;height:101px;z-index:5;text-align:left;">
+            <span class="texto">Aquí puedes pagar tus consultas o productos. <br><br>Selecciona uno de nuestros métodos de pago, llena los datos solicitados y haz click en 'pagar'.</span>
+        </div>
+    </div>
+    <div class="bkng-tb-cntnt">
+        <div class="pymnts">
+            <form action="../pago_tarjeta.php" method="POST" id="payment-form">
+                <input type="hidden" name="token_id" id="token_id">
+                <div class="pymnt-itm card active">
+                    <h2>Tarjeta de crédito o débito</h2>
+                    <div class="pymnt-cntnt"/>
+                    <div class="card-expl">
+                        <div class="credit"><h4>Tarjetas de crédito</h4></div>
+                        <div class="debit"><h4>Tarjetas de débito</h4></div>
+                    </div>
+                    <div class="sctn-row">
+                        <div class="sctn-col l">
+                            <label>Nombre del titular</label><input type="text" placeholder="Como aparece en la tarjeta" autocomplete="off" data-openpay-card="holder_name">
+                        </div>
+                        <div class="sctn-col">
+                            <label>Número de tarjeta</label><input type="text" autocomplete="off" data-openpay-card="card_number"></div>
+                    </div>
+                    <div class="sctn-row">
+                        <div class="sctn-col l">
+                            <label>Fecha de expiración</label>
+                            <div class="sctn-col half l"><input type="text" placeholder="Mes" data-openpay-card="expiration_month"></div>
+                            <div class="sctn-col half l"><input type="text" placeholder="Año" data-openpay-card="expiration_year"></div>
+                        </div>
+                        <div class="sctn-col cvv"><label>Código de seguridad</label>
+                            <div class="sctn-col half l"><input type="text" placeholder="3 dígitos" autocomplete="off" data-openpay-card="cvv2"></div>
+                        </div>
+                        <div>
+                            <input type="text" name="amount" value="100.00">
+                            <input type="text" name="description" value="Prepago">
+                            <input type="text" name="name" value="Juan">
+                            <input type="text" name="last_name" value="Vázquez Juárez">
+                            <input type="text" name="email" value="juan.vazquez@empresa.com">
+                            <input type="text" name="phone_number" value="4423456723">
+                        </div>
+                    </div>
+                    <div class="openpay"><div class="logo">Transacciones realizadas vía:</div>
+                        <div class="shield">Tus pagos se realizan de forma segura con encriptación de 256 bits</div>
+                    </div>
+                    <div class="sctn-row">
+                        <a class="button rght" id="pay-button">Pagar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="masterLayer1" style="position:relative;text-align:center;width:100%;height:86px;z-index:11;">
+    <div id="masterLayer1_Container" style="width:1300px;position:relative;margin-left:auto;margin-right:auto;text-align:left;">
+        <div id="wb_masterCssMenu2" style="position:relative;left:294px;top:28px;width:712px;height:29px;text-align:center;z-index:6;">
+            <ul>
+                <li class="firstmain"><a href="./index.html" target="_self">Acceso&nbsp;Privado</a>
+                </li>
+                <li><a href="./contacto.html" target="_self">Contacto</a>
+                </li>
+                <li><a href="./AVISO_LEGAL.pdf" target="_blank">Aviso&nbsp;Legal</a>
+                </li>
+                <li><a href="./AVISO_DE_PRIVACIDAD.pdf" target="_blank">Aviso&nbsp;de&nbsp;Privacidad</a>
+                </li>
+            </ul>
+            <br>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
