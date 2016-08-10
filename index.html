@@ -8,15 +8,23 @@
     <meta name="keywords" content="metodo bajar kilos, doctor bajar peso, clinica df perder peso, bajar peso en semanas, que es vime, metodo vime">
     <link href="favicon.ico" rel="shortcut icon">
 
-    <link href="css/Vime10.css" rel="stylesheet" type="text/css">
-    <link href="css/payments.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="css/Vime10.css" type="text/css">
+    <link rel="stylesheet" href="css/payments.css" type="text/css">
+    <link rel="stylesheet" href="app/bower_components/angular-material/angular-material.min.css">
 
-    <script type="text/javascript"
-            src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script type="text/javascript"
-            src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
-    <script type='text/javascript'
-            src="https://openpay.s3.amazonaws.com/openpay-data.v1.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://openpay.s3.amazonaws.com/openpay.v1.min.js"></script>
+    <script type='text/javascript' src="https://openpay.s3.amazonaws.com/openpay-data.v1.min.js"></script>
+
+    <script src="app/bower_components/angular/angular.min.js"></script>
+    <script src="app/bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="app/bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="app/bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="app/bower_components/angular-material/angular-material.min.js"></script>
+
+    <script src="app/app.module.js"></script>
+    <script src="app/components/payments/payments.service.js"></script>
+    <script src="app/components/payments/payments.controller.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function() {
@@ -49,7 +57,7 @@
     </script>
 
 </head>
-<body>
+<body ng-app="vime">
 <!-- Google Tag Manager -->
 <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TK9DWP"
                   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -97,54 +105,131 @@
             <span class="texto">Aquí puedes pagar tus consultas o productos. <br><br>Selecciona uno de nuestros métodos de pago, llena los datos solicitados y haz click en 'pagar'.</span>
         </div>
     </div>
-    <div class="bkng-tb-cntnt">
+    <div class="bkng-tb-cntnt" ng-controller="paymentsController as ctrl">
+
         <div class="pymnts">
             <form action="../pago_tarjeta.php" method="POST" id="payment-form">
                 <input type="hidden" name="token_id" id="token_id">
+
                 <div class="pymnt-itm card active">
-                    <h2>Tarjeta de crédito o débito</h2>
-                    <div class="pymnt-cntnt"/>
-                    <div class="card-expl">
-                        <div class="credit"><h4>Tarjetas de crédito</h4></div>
-                        <div class="debit"><h4>Tarjetas de débito</h4></div>
-                    </div>
+                    <h2>Información del cliente</h2>
+                    <div class="pymnt-cntnt">
                     <div class="sctn-row">
                         <div class="sctn-col l">
-                            <label>Nombre del titular</label><input type="text" placeholder="Como aparece en la tarjeta" autocomplete="off" data-openpay-card="holder_name">
+                            <label>Nombre</label>
+                            <input type="text" name="name" value="Juan">
                         </div>
                         <div class="sctn-col">
-                            <label>Número de tarjeta</label><input type="text" autocomplete="off" data-openpay-card="card_number"></div>
+                            <label>Apellidos</label>
+                            <input type="text" name="last_name" value="Vázquez Juárez">
+                        </div>
                     </div>
                     <div class="sctn-row">
                         <div class="sctn-col l">
-                            <label>Fecha de expiración</label>
-                            <div class="sctn-col half l"><input type="text" placeholder="Mes" data-openpay-card="expiration_month"></div>
-                            <div class="sctn-col half l"><input type="text" placeholder="Año" data-openpay-card="expiration_year"></div>
+                            <label>Correo electrónico</label>
+                            <input type="email" name="email" value="juan.vazquez@empresa.com">
                         </div>
-                        <div class="sctn-col cvv"><label>Código de seguridad</label>
-                            <div class="sctn-col half l"><input type="text" placeholder="3 dígitos" autocomplete="off" data-openpay-card="cvv2"></div>
+                        <div class="sctn-col">
+                            <label>Teléfono</label>
+                            <input type="phone" name="phone_number" value="4423456723">
                         </div>
-                        <div>
-                            <input type="text" name="amount" value="100.00">
-                            <input type="text" name="description" value="Prepago">
-                            <input type="text" name="name" value="Juan">
-                            <input type="text" name="last_name" value="Vázquez Juárez">
-                            <input type="text" name="email" value="juan.vazquez@empresa.com">
-                            <input type="text" name="phone_number" value="4423456723">
-                        </div>
-                    </div>
-                    <div class="openpay"><div class="logo">Transacciones realizadas vía:</div>
-                        <div class="shield">Tus pagos se realizan de forma segura con encriptación de 256 bits</div>
                     </div>
                     <div class="sctn-row">
-                        <a class="button rght" id="pay-button">Pagar</a>
+                        <div class="sctn-col l">
+                            <label>¿Qué deseas pagar?</label>
+                            <md-radio-group ng-model="ctrl.radioButtons.description" ng-change="ctrl.updatePaymentDescription()">
+                                <md-radio-button value="consultation">Consulta</md-radio-button>
+                                <md-radio-button value="other">Otro</md-radio-button>
+                            </md-radio-group>
+                        </div>
+                    </div>
+                    <div class="sctn-row">
+                        <div class="sctn-col l">
+                            <label>Monto</label>
+                            <input type="text" name="amount" ng-model="ctrl.paymentData.amount" ng-disabled="ctrl.disablePaymentDescription()" ng-class="{ 'disabled': ctrl.disablePaymentDescription() }">
+                        </div>
+                        <div class="sctn-col">
+                            <label>Concepto</label>
+                            <input type="text" name="description" ng-model="ctrl.paymentData.concept" value="" ng-disabled="ctrl.disablePaymentDescription()" ng-class="{ 'disabled': ctrl.disablePaymentDescription() }">
+                        </div>
+                    </div>
+                    <div class="sctn-row">
+                        <div class="sctn-col l">
+                            <div class="sctn-col l">
+                                <label>¿Cómo deseas pagar?</label>
+                                <md-radio-group ng-model="ctrl.radioButtons.paymentOption" ng-change="ctrl.updatePaymentOption()">
+                                    <md-radio-button value="card">Tarjeta de crédito o débito</md-radio-button>
+                                    <md-radio-button value="other">En tienda</md-radio-button>
+                                </md-radio-group>
+                            </div>
+                        </div>
+                    </div>
                     </div>
                 </div>
+                <div class="payment-tabs">
+                    <md-content>
+                        <md-tabs md-dynamic-height md-border-bottom md-selected="ctrl.selectedPaymentTab">
+                            <md-tab label="Tarjeta de crédito o débito">
+                                <md-content>
+                                    <div class="pymnt-itm card active">
+                                        <h2>Tarjeta de crédito o débito</h2>
+                                        <div class="pymnt-cntnt">
+                                            <div class="card-expl">
+                                                <div class="credit"><h4>Tarjetas de crédito</h4></div>
+                                                <div class="debit"><h4>Tarjetas de débito</h4></div>
+                                            </div>
+                                            <div class="sctn-row">
+                                                <div class="sctn-col l">
+                                                    <label>Nombre del titular</label><input type="text" placeholder="Como aparece en la tarjeta" autocomplete="off" data-openpay-card="holder_name">
+                                                </div>
+                                                <div class="sctn-col">
+                                                    <label>Número de tarjeta</label><input type="text" autocomplete="off" data-openpay-card="card_number"></div>
+                                            </div>
+                                            <div class="sctn-row">
+                                                <div class="sctn-col l">
+                                                    <label>Fecha de expiración</label>
+                                                    <div class="sctn-col half l"><input type="text" placeholder="Mes" data-openpay-card="expiration_month"></div>
+                                                    <div class="sctn-col half l"><input type="text" placeholder="Año" data-openpay-card="expiration_year"></div>
+                                                </div>
+                                                <div class="sctn-col cvv"><label>Código de seguridad</label>
+                                                    <div class="sctn-col half l"><input type="text" placeholder="3 dígitos" autocomplete="off" data-openpay-card="cvv2"></div>
+                                                </div>
+                                            </div>
+                                            <div class="openpay"><div class="logo">Transacciones realizadas vía:</div>
+                                                <div class="shield">Tus pagos se realizan de forma segura con encriptación de 256 bits</div>
+                                            </div>
+                                            <div class="sctn-row">
+                                                <a class="button rght" id="pay-button">Pagar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </md-content>
+                            </md-tab>
+                            <md-tab label="En tienda">
+                                <md-content>
+                                    <div class="pymnt-itm card active">
+                                        <h2>En tienda</h2>
+                                        <div class="pymnt-cntnt">
+                                            <p class="instructions">
+                                                Para realizar el pago en una tienda de autoservicio es necesario que generes e imprimas tu formato de pago.
+                                            </p>
+                                            <div class="sctn-row">
+                                                <a class="button rght" id="pay-button">Generar formato de pago</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </md-content>
+                            </md-tab>
+                        </md-tabs>
+                    </md-content>
+                </div>
+
+
             </form>
         </div>
     </div>
 </div>
-<div id="masterLayer1" style="position:relative;text-align:center;width:100%;height:86px;z-index:11;">
+<div id="masterLayer1" style="text-align:center;width:100%;height:86px;z-index:11;">
     <div id="masterLayer1_Container" style="width:1300px;position:relative;margin-left:auto;margin-right:auto;text-align:left;">
         <div id="wb_masterCssMenu2" style="position:relative;left:294px;top:28px;width:712px;height:29px;text-align:center;z-index:6;">
             <ul>

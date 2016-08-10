@@ -190,27 +190,22 @@ body
 
 
 @charset "US-ASCII";
-@import "http://fonts.googleapis.com/css?family=Lato:300,400,700";
 .bkng-tb-cntnt * {
     color: #444;
-    font-family: Lato;
+    font-family: "Futura Bk BT";
     font-size: 16px;
     font-weight: 300;
 }
 ::-webkit-input-placeholder {
-    font-family: "Futura Bk BT";
     font-size: 14px;
 }
 :-moz-placeholder {
-    font-family: "Futura Bk BT";
     font-size: 14px;
 }
 ::-moz-placeholder {
-    font-family: "Futura Bk BT";
     font-size: 14px;
 }
 :-ms-input-placeholder {
-    font-family: "Futura Bk BT";
     font-size: 14px;
 }
 
@@ -250,15 +245,9 @@ strong {
 }
 .bkng-tb-cntnt {
     display: inline-block;
-    font-family:'futura bk bt';
+    margin-bottom: 25px;
+    margin-top: 25px;
     width: 800px;
-}
-.bkng-tb-cntnt h2 {
-    font-family:'futura bk bt';
-}
-
-.bkng-tb-cntnt h4 {
-    font-family:'futura bk bt';
 }
 
 .bkng-tb-cntnt a.button {
@@ -297,7 +286,7 @@ strong {
     float: left;
     width: 800px;
 }
-.pymnts * {
+.pymnts .pymnt-itm *{
     float: left;
 }
 
@@ -318,8 +307,10 @@ strong {
     padding: 10px 12px;
     width: 333px;
 }
+.sctn-col input.disabled {
+    color: #999;
+}
 .sctn-col label {
-    font-family:'futura bk bt';
     font-size: 14px;
     line-height: 24px;
     margin-bottom: 10px;
@@ -354,7 +345,7 @@ strong {
     width: 780px;
 }
 .pymnt-itm.active h2 {
-    background-color: #e51f04;
+    background-color: #22DAC3;
     color: #fff;
     cursor: default;
 }
@@ -401,7 +392,7 @@ strong {
     width: 110px;
 }
 .openpay {
-    float: right;
+    float: right !important;
     height: 60px;
     margin: 10px 30px 0 0;
     width: 435px;
@@ -452,4 +443,24 @@ strong {
 .card-expl h4 {
     font-weight: 400;
     margin: 0;
+}
+
+md-radio-group * {
+    clear: both !important;
+}
+
+md-radio-group md-radio-button:not(:first-child) {
+    margin-top: 0px !important;
+}
+
+.payment-tabs {
+    clear: both;
+}
+
+.payment-tabs md-tabs-canvas {
+    display: none;
+}
+
+.payment-tabs .instructions {
+    padding: 20px 50px;
 }
