@@ -44,6 +44,22 @@
             }
         };
 
+        ctrl.getPaymentPDF = function(){
+            var formData = {
+                'name': 'Ricardo'
+            };
+
+            paymentsService.getPaymentPDF(formData)
+                .then(function(data) {
+                    if(data.user){
+                        $location.path('/customizer');
+                    }
+                    console.log('success');
+                }, function(error) {
+                    console.log('error');
+                });
+        };
+
     }]);
 
 })(window.angular);

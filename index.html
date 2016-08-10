@@ -159,7 +159,7 @@
                                 <label>¿Cómo deseas pagar?</label>
                                 <md-radio-group ng-model="ctrl.radioButtons.paymentOption" ng-change="ctrl.updatePaymentOption()">
                                     <md-radio-button value="card">Tarjeta de crédito o débito</md-radio-button>
-                                    <md-radio-button value="other">En tienda</md-radio-button>
+                                    <md-radio-button value="store">En tienda</md-radio-button>
                                 </md-radio-group>
                             </div>
                         </div>
@@ -214,7 +214,7 @@
                                                 Para realizar el pago en una tienda de autoservicio es necesario que generes e imprimas tu formato de pago.
                                             </p>
                                             <div class="sctn-row">
-                                                <a class="button rght" id="pay-button">Generar formato de pago</a>
+                                                <a class="button rght" ng-click="ctrl.getPaymentPDF()">Generar formato de pago</a>
                                             </div>
                                         </div>
                                     </div>

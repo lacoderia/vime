@@ -4,3 +4,6 @@
 angular.module('vime', [
     'ngMaterial'
 ]);
+
+angular.module('vime')
+    .constant('API_URL', 'http://localhost/vime');
