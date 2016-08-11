@@ -3,12 +3,11 @@
 
     angular.module('vime').factory('paymentsService', ['$http', '$q', 'API_URL', function ($http, $q, API_URL) {
 
-        var getPaymentPDF = function(formData){
-            var openpayServiceURL = API_URL + '/services/pago_tienda.php';
-            return $http.post(openpayServiceURL, { formData: formData, name: 'Ricardo' })
+        var processPayment = function(formData){
+            var openpayServiceURL = API_URL + '/services/pago.php';
+            return $http.post(openpayServiceURL, { formData: formData })
                 .then(function(response) {
                     var data = response.data;
-                    console.log(response);
                     if (typeof data === 'object') {
                         return data;
                     } else {
@@ -21,7 +20,7 @@
         };
 
         var service = {
-            getPaymentPDF: getPaymentPDF
+            processPayment: processPayment
         };
 
         return service;

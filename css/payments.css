@@ -227,14 +227,7 @@ strong {
     padding: 12px 0;
     width: 100%;
     display: table;
-    background: #E51F04;
-    background: -moz-linear-gradient(top,  #E51F04 0%, #A60000 100%);
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#E51F04), color-stop(100%,#A60000));
-    background: -webkit-linear-gradient(top,  #E51F04 0%,#A60000 100%);
-    background: -o-linear-gradient(top,  #E51F04 0%,#A60000 100%);
-    background: -ms-linear-gradient(top,  #E51F04 0%,#A60000 100%);
-    background: linear-gradient(top,  #E51F04 0%,#A60000 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E51F04', endColorstr='#A60000',GradientType=0 );
+    background: #FF558F;
 }
 .bkng-tb-cntnt a.button i {
     margin-right: 10px;
@@ -252,7 +245,6 @@ strong {
 
 .bkng-tb-cntnt a.button {
     color: #fff;
-    float: right;
     font-size: 18px;
     padding: 5px 20px;
     width: auto;
@@ -342,10 +334,11 @@ strong {
     line-height: 24px;
     margin: 0;
     padding: 28px 0 28px 20px;
-    width: 780px;
+    width: 800px;
 }
 .pymnt-itm.active h2 {
     background-color: #22DAC3;
+    box-sizing: border-box;
     color: #fff;
     cursor: default;
 }
@@ -447,6 +440,7 @@ strong {
 
 md-radio-group * {
     clear: both !important;
+    text-align: left;
 }
 
 md-radio-group md-radio-button:not(:first-child) {
@@ -463,4 +457,14 @@ md-radio-group md-radio-button:not(:first-child) {
 
 .payment-tabs .instructions {
     padding: 20px 50px;
+}
+
+.successful-payment .instructions {
+    box-sizing: border-box;
+    padding: 40px 50px;
+    width: 800px;
+}
+
+.bkng-tb-cntnt a.button.disabled {
+    background: #ccc;
 }

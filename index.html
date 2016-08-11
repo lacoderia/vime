@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Language" content="es-mx">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>VIME | ¿Quiénes somos?</title>
+    <title>VIME | Pagos</title>
     <meta name="description" content="Conoce sobre nuestra clínica, nuestros especialistas y nuestro método efecto para reducir peso en semanas. Te ofrecemos una solución definitiva y duradera">
     <meta name="keywords" content="metodo bajar kilos, doctor bajar peso, clinica df perder peso, bajar peso en semanas, que es vime, metodo vime">
     <link href="favicon.ico" rel="shortcut icon">
@@ -32,26 +32,6 @@
             OpenPay.setId('mlttma1g0lusxgmm9kst');
             OpenPay.setApiKey('pk_25e9eff9fda645308badcfe65d175883');
             OpenPay.setSandboxMode(true);
-            //Se genera el id de dispositivo
-            var deviceSessionId = OpenPay.deviceData.setup("payment-form", "deviceIdHiddenFieldName");
-
-            $('#pay-button').on('click', function(event) {
-                event.preventDefault();
-                $("#pay-button").prop( "disabled", true);
-                OpenPay.token.extractFormAndCreate('payment-form', sucess_callbak, error_callbak);
-            });
-
-            var sucess_callbak = function(response) {
-                var token_id = response.data.id;
-                $('#token_id').val(token_id);
-                $('#payment-form').submit();
-            };
-
-            var error_callbak = function(response) {
-                var desc = response.data.description != undefined ? response.data.description : response.message;
-                alert("ERROR [" + response.status + "] " + desc);
-                $("#pay-button").prop("disabled", false);
-            };
 
         });
     </script>
@@ -108,8 +88,9 @@
     <div class="bkng-tb-cntnt" ng-controller="paymentsController as ctrl">
 
         <div class="pymnts">
-            <form action="../pago_tarjeta.php" method="POST" id="payment-form">
+            <form action="" method="POST" id="payment-form" ng-if="!ctrl.showSuccess">
                 <input type="hidden" name="token_id" id="token_id">
+                <input type="hidden" name="payment_option" id="payment_option">
 
                 <div class="pymnt-itm card active">
                     <h2>Información del cliente</h2>
@@ -117,28 +98,28 @@
                     <div class="sctn-row">
                         <div class="sctn-col l">
                             <label>Nombre</label>
-                            <input type="text" name="name" value="Juan">
+                            <input type="text" name="name" ng-model="ctrl.customer.name" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }">
                         </div>
                         <div class="sctn-col">
                             <label>Apellidos</label>
-                            <input type="text" name="last_name" value="Vázquez Juárez">
+                            <input type="text" name="last_name" ng-model="ctrl.customer.lastName" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }">
                         </div>
                     </div>
                     <div class="sctn-row">
                         <div class="sctn-col l">
                             <label>Correo electrónico</label>
-                            <input type="email" name="email" value="juan.vazquez@empresa.com">
+                            <input type="email" name="email" ng-model="ctrl.customer.email" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }">
                         </div>
                         <div class="sctn-col">
                             <label>Teléfono</label>
-                            <input type="phone" name="phone_number" value="4423456723">
+                            <input type="phone" name="phone_number" ng-model="ctrl.customer.phone" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }">
                         </div>
                     </div>
                     <div class="sctn-row">
                         <div class="sctn-col l">
                             <label>¿Qué deseas pagar?</label>
-                            <md-radio-group ng-model="ctrl.radioButtons.description" ng-change="ctrl.updatePaymentDescription()">
-                                <md-radio-button value="consultation">Consulta</md-radio-button>
+                            <md-radio-group ng-model="ctrl.radioButtons.productOption" ng-change="ctrl.updatePaymentDescription()">
+                                <md-radio-button value="consultation">Apartado de consulta inicial</md-radio-button>
                                 <md-radio-button value="other">Otro</md-radio-button>
                             </md-radio-group>
                         </div>
@@ -146,22 +127,20 @@
                     <div class="sctn-row">
                         <div class="sctn-col l">
                             <label>Monto</label>
-                            <input type="text" name="amount" ng-model="ctrl.paymentData.amount" ng-disabled="ctrl.disablePaymentDescription()" ng-class="{ 'disabled': ctrl.disablePaymentDescription() }">
+                            <span style="padding-top: 14px;">$ </span><input type="text" name="amount" ng-model="ctrl.paymentData.amount" ng-disabled="ctrl.disablePaymentDescription() || ctrl.loading" ng-class="{ 'disabled': ctrl.disablePaymentDescription() || ctrl.loading }">
                         </div>
                         <div class="sctn-col">
                             <label>Concepto</label>
-                            <input type="text" name="description" ng-model="ctrl.paymentData.concept" value="" ng-disabled="ctrl.disablePaymentDescription()" ng-class="{ 'disabled': ctrl.disablePaymentDescription() }">
+                            <input type="text" name="description" ng-model="ctrl.paymentData.description" value="" ng-disabled="ctrl.disablePaymentDescription() || ctrl.loading" ng-class="{ 'disabled': ctrl.disablePaymentDescription() || ctrl.loading }">
                         </div>
                     </div>
                     <div class="sctn-row">
                         <div class="sctn-col l">
-                            <div class="sctn-col l">
-                                <label>¿Cómo deseas pagar?</label>
-                                <md-radio-group ng-model="ctrl.radioButtons.paymentOption" ng-change="ctrl.updatePaymentOption()">
-                                    <md-radio-button value="card">Tarjeta de crédito o débito</md-radio-button>
-                                    <md-radio-button value="store">En tienda</md-radio-button>
-                                </md-radio-group>
-                            </div>
+                            <label>¿Cómo deseas pagar?</label>
+                            <md-radio-group ng-model="ctrl.radioButtons.paymentOption" ng-change="ctrl.updatePaymentOption()">
+                                <md-radio-button value="card">Tarjeta de crédito o débito</md-radio-button>
+                                <md-radio-button value="store">Tienda de conveniencia (7Eleven, Farmacias del Ahorro, etc)</md-radio-button>
+                            </md-radio-group>
                         </div>
                     </div>
                     </div>
@@ -180,26 +159,27 @@
                                             </div>
                                             <div class="sctn-row">
                                                 <div class="sctn-col l">
-                                                    <label>Nombre del titular</label><input type="text" placeholder="Como aparece en la tarjeta" autocomplete="off" data-openpay-card="holder_name">
+                                                    <label>Nombre del titular</label><input type="text" placeholder="Como aparece en la tarjeta" autocomplete="off" ng-model="ctrl.card.holderName" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }">
                                                 </div>
                                                 <div class="sctn-col">
-                                                    <label>Número de tarjeta</label><input type="text" autocomplete="off" data-openpay-card="card_number"></div>
+                                                    <label>Número de tarjeta</label><input type="text" autocomplete="off" ng-model="ctrl.card.cardNumber" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }"></div>
                                             </div>
                                             <div class="sctn-row">
                                                 <div class="sctn-col l">
                                                     <label>Fecha de expiración</label>
-                                                    <div class="sctn-col half l"><input type="text" placeholder="Mes" data-openpay-card="expiration_month"></div>
-                                                    <div class="sctn-col half l"><input type="text" placeholder="Año" data-openpay-card="expiration_year"></div>
+                                                    <div class="sctn-col half l"><input type="text" placeholder="Mes" ng-model="ctrl.card.expirationMonth" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }"></div>
+                                                    <div class="sctn-col half l"><input type="text" placeholder="Año" ng-model="ctrl.card.expirationYear" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }"></div>
                                                 </div>
                                                 <div class="sctn-col cvv"><label>Código de seguridad</label>
-                                                    <div class="sctn-col half l"><input type="text" placeholder="3 dígitos" autocomplete="off" data-openpay-card="cvv2"></div>
+                                                    <div class="sctn-col half l"><input type="text" placeholder="3 dígitos" autocomplete="off" ng-model="ctrl.card.cvv2" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }"></div>
                                                 </div>
                                             </div>
                                             <div class="openpay"><div class="logo">Transacciones realizadas vía:</div>
                                                 <div class="shield">Tus pagos se realizan de forma segura con encriptación de 256 bits</div>
                                             </div>
-                                            <div class="sctn-row">
-                                                <a class="button rght" id="pay-button">Pagar</a>
+                                            <div class="sctn-row" layout="row" layout-align="end center">
+                                                <md-progress-circular class="button-loader" md-mode="indeterminate" md-diameter="40" ng-if="ctrl.loading"></md-progress-circular>
+                                                <a class="button rght" ng-click="ctrl.processCardPayment()" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }">Pagar</a>
                                             </div>
                                         </div>
                                     </div>
@@ -213,8 +193,9 @@
                                             <p class="instructions">
                                                 Para realizar el pago en una tienda de autoservicio es necesario que generes e imprimas tu formato de pago.
                                             </p>
-                                            <div class="sctn-row">
-                                                <a class="button rght" ng-click="ctrl.getPaymentPDF()">Generar formato de pago</a>
+                                            <div class="sctn-row" layout="row" layout-align="end center" style="height: 40px">
+                                                <md-progress-circular class="button-loader" md-mode="indeterminate" md-diameter="40" ng-if="ctrl.loading"></md-progress-circular>
+                                                <a class="button rght" ng-click="ctrl.processStorePayment()" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }">Generar formato de pago</a>
                                             </div>
                                         </div>
                                     </div>
@@ -222,10 +203,21 @@
                             </md-tab>
                         </md-tabs>
                     </md-content>
+
                 </div>
-
-
             </form>
+            <div ng-if="ctrl.showSuccess">
+                <md-content>
+                    <div class="pymnt-itm card active">
+                        <h2>¡Recibimos tu pago!</h2>
+                        <div class="pymnt-cntnt successful-payment">
+                            <p class="instructions">
+                                Hemos recibido un pago a tu nombre.<br>Gracias por confiar en nosotros. <br><br>Tu número de referencia es: {{ ctrl.reference }}
+                            </p>
+                        </div>
+                    </div>
+                </md-content>
+            </div>
         </div>
     </div>
 </div>
