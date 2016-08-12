@@ -62,53 +62,58 @@
                 </li>
                 <li><a href="./herramientas.html" target="_self">Herramientas</a>
                 </li>
-                <li><a href="./pagos.html" target="_self" class="active">Pagos</a>
-                </li>
                 <li><a href="./contacto.html" target="_self">Contacto/Ubicaci&#243;n</a>
                 </li>
             </ul>
             <br>
         </div>
+        <div id="wb_masterCssMenu3" style="position:absolute;right:84px;top:25px;height:28px;z-index:8;">
+            <a href="./aparta-tu-consulta.html" class="action-button" target="_self">Aparta tu consulta</a>
+        </div>
     </div>
 </div>
 <div id="container">
-    <div id="wb_pagosImage1" style="margin-left:70px;margin-top:0px;width:1232px;height:426px;z-index:9;">
-        <img src="images/dieta_deliciosa.jpg" id="pagosImage1" alt="dieta para perder peso">
+    <div id="wb_pagosImage1" style="margin-left:70px;margin-top:0px;width:1232px;height:616px;z-index:9;">
+        <img src="images/pagos-header.jpg" id="pagosImage1" alt="dieta para perder peso">
     </div>
 </div>
 <div id="pagosLayer3" style="text-align:center;left:0px;margin-top:44px;width:100%;z-index:10;">
     <div id="pagosLayer3_Container" style="width:1300px;position:relative;margin-left:auto;margin-right:auto;text-align:left;">
 
         <div id="wb_pagosText1" style="margin-left:47px;width:503px;height:135px;text-align:right;z-index:3;">
-            <span style="color:#8c8c8c;font-family:'futura bk bt';font-size:37px;">Realiza pagos online.<br>¡Es rápido, sencillo y seguro!</span>
+            <span style="color:#8c8c8c;font-family:'futura bk bt';font-size:37px;">
+                No te quedes sin tu consulta y reserva tu lugar.
+                <br>Es seguro y muy fácil
+            </span>
         </div>
 
         <div id="wb_pagosText2" style="width:540px;height:101px;z-index:5;text-align:left;">
-            <span class="texto">Aquí puedes pagar tus consultas o productos. <br><br>Selecciona uno de nuestros métodos de pago, llena los datos solicitados y haz click en 'pagar'.</span>
+            <span class="texto">
+                ¿Ya te dimos fecha y hora para tu consulta?* ¡Perfecto! <br><br>
+                Entonces reserva tu lugar. Es muy fácil ya que puedes pagar en línea con tarjeta de crédito o débito; o también puedes hacerlo en tiendas de conveniencia.<br><br><br>
+                * Si aún no tienes fecha y hora  para tu consulta, llena el <a href="./index.html" style="color: #8C8C8C; font-weight: 800">formulario</a> para solicitarla
+            </span>
         </div>
     </div>
     <div class="bkng-tb-cntnt" ng-controller="paymentsController as ctrl">
 
         <div class="pymnts">
-            <form action="" method="POST" id="payment-form" name="ctrl.paymentForm" ng-if="!ctrl.showSuccess">
-                <input type="hidden" name="token_id" id="token_id">
-                <input type="hidden" name="payment_option" id="payment_option">
-
-                <div class="pymnt-itm card active">
+            <form novalidate ng-submit="ctrl.processPayment()" ng-if="!ctrl.showSuccess">
+                <div class="pymnt-itm card active" ng-form="ctrl.customerForm">
                     <h2>Información del cliente</h2>
                     <div class="pymnt-cntnt">
                     <div class="sctn-row">
                         <div class="sctn-col l">
                             <label>Nombre</label>
                             <input type="text" name="name" ng-model="ctrl.customer.name" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }" required>
-                            <div ng-messages="ctrl.paymentForm.name.$error" ng-if="ctrl.paymentForm.name.$touched" md-auto-hide="false">
+                            <div ng-messages="ctrl.customerForm.name.$error" ng-if="ctrl.customerForm.name.$touched || ctrl.submitted" md-auto-hide="false">
                                 <div ng-message="required" class="error-message">Este campo es requerido</div>
                             </div>
                         </div>
                         <div class="sctn-col">
                             <label>Apellidos</label>
                             <input type="text" name="lastName" ng-model="ctrl.customer.lastName" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }" required>
-                            <div ng-messages="ctrl.paymentForm.lastName.$error" ng-if="ctrl.paymentForm.lastName.$touched" md-auto-hide="false">
+                            <div ng-messages="ctrl.customerForm.lastName.$error" ng-if="ctrl.customerForm.lastName.$touched || ctrl.submitted" md-auto-hide="false">
                                 <div ng-message="required" class="error-message">Este campo es requerido</div>
                             </div>
                         </div>
@@ -116,18 +121,18 @@
                     <div class="sctn-row">
                         <div class="sctn-col l">
                             <label>Correo electrónico</label>
-                            <input type="email" name="email" ng-model="ctrl.customer.email" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }" required>
-                            <div ng-messages="ctrl.paymentForm.email.$error" ng-if="ctrl.paymentForm.email.$touched" md-auto-hide="false">
+                            <input type="text" name="email" ng-model="ctrl.customer.email" ng-pattern="/^.+@.+\..+$/" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }" required>
+                            <div ng-messages="ctrl.customerForm.email.$error" ng-if="ctrl.customerForm.email.$touched || ctrl.submitted" md-auto-hide="false">
                                 <div ng-message="required" class="error-message">Este campo es requerido</div>
-                                <div ng-message="email" class="error-message">El correo electrónico es inválido</div>
+                                <div ng-message="pattern" class="error-message">Este no es un formato válido de correo electrónico</div>
                             </div>
                         </div>
                         <div class="sctn-col">
                             <label>Teléfono</label>
-                            <input type="phone" name="phone" placeholder="10 dígitos" ng-model="ctrl.customer.phone" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }" ng-pattern="/^[0-9]{10}$/" required>
-                            <div ng-messages="ctrl.paymentForm.phone.$error" ng-if="ctrl.paymentForm.phone.$touched" md-auto-hide="false">
+                            <input type="phone" name="phone" placeholder="10 dígitos" ng-model="ctrl.customer.phone" ng-pattern="/^[0-9]{10}$/" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }" required>
+                            <div ng-messages="ctrl.customerForm.phone.$error" ng-if="ctrl.customerForm.phone.$touched || ctrl.submitted" md-auto-hide="false">
                                 <div ng-message="required" class="error-message">Este campo es requerido</div>
-                                <div ng-message="pattern" class="error-message">El teléfono es inválido</div>
+                                <div ng-message="pattern" class="error-message">El teléfono debe tener 10 dígitos (sólo números)</div>
                             </div>
                         </div>
                     </div>
@@ -143,11 +148,18 @@
                     <div class="sctn-row">
                         <div class="sctn-col l">
                             <label>Monto</label>
-                            <span style="padding-top: 14px;">$ </span><input type="text" name="amount" ng-model="ctrl.paymentData.amount" ng-disabled="ctrl.disablePaymentDescription() || ctrl.loading" ng-class="{ 'disabled': ctrl.disablePaymentDescription() || ctrl.loading }">
+                            <span style="padding-top: 14px;">$ </span><input type="text" name="amount" ng-model="ctrl.paymentData.amount" ng-pattern="/^[0-9]*(?:\.[0-9]{2})?$/" ng-disabled="ctrl.disablePaymentDescription() || ctrl.loading" ng-class="{ 'disabled': ctrl.disablePaymentDescription() || ctrl.loading }" required>
+                            <div ng-messages="ctrl.customerForm.amount.$error" ng-if="ctrl.customerForm.amount.$touched || ctrl.submitted" md-auto-hide="false">
+                                <div ng-message="required" class="error-message">Este campo es requerido</div>
+                                <div ng-message="pattern" class="error-message">El monto debe tener un formato numérico (sin comas)</div>
+                            </div>
                         </div>
                         <div class="sctn-col">
                             <label>Concepto</label>
-                            <input type="text" name="description" ng-model="ctrl.paymentData.description" value="" ng-disabled="ctrl.disablePaymentDescription() || ctrl.loading" ng-class="{ 'disabled': ctrl.disablePaymentDescription() || ctrl.loading }">
+                            <input type="text" name="description" ng-model="ctrl.paymentData.description" value="" ng-disabled="ctrl.disablePaymentDescription() || ctrl.loading" ng-class="{ 'disabled': ctrl.disablePaymentDescription() || ctrl.loading }" required>
+                            <div ng-messages="ctrl.customerForm.description.$error" ng-if="ctrl.customerForm.description.$touched || ctrl.submitted" md-auto-hide="false">
+                                <div ng-message="required" class="error-message">Este campo es requerido</div>
+                            </div>
                         </div>
                     </div>
                     <div class="sctn-row">
@@ -166,7 +178,7 @@
                         <md-tabs md-dynamic-height md-border-bottom md-selected="ctrl.selectedPaymentTab">
                             <md-tab label="Tarjeta de crédito o débito">
                                 <md-content>
-                                    <div class="pymnt-itm card active">
+                                    <div class="pymnt-itm card active" ng-form="ctrl.paymentForm">
                                         <h2>Tarjeta de crédito o débito</h2>
                                         <div class="pymnt-cntnt">
                                             <div class="card-expl">
@@ -175,19 +187,48 @@
                                             </div>
                                             <div class="sctn-row">
                                                 <div class="sctn-col l">
-                                                    <label>Nombre del titular</label><input type="text" placeholder="Como aparece en la tarjeta" autocomplete="off" ng-model="ctrl.card.holderName" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }">
+                                                    <label>Nombre del titular</label>
+                                                    <input type="text" name="holderName" placeholder="Como aparece en la tarjeta" autocomplete="off" ng-model="ctrl.card.holderName" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }" required>
+                                                    <div ng-messages="ctrl.paymentForm.holderName.$error" ng-if="ctrl.paymentForm.holderName.$touched || ctrl.submitted" md-auto-hide="false">
+                                                        <div ng-message="required" class="error-message">Este campo es requerido</div>
+                                                    </div>
                                                 </div>
                                                 <div class="sctn-col">
-                                                    <label>Número de tarjeta</label><input type="text" autocomplete="off" ng-model="ctrl.card.cardNumber" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }"></div>
+                                                    <label>Número de tarjeta</label>
+                                                    <input type="text" name="cardNumber" autocomplete="off" ng-model="ctrl.card.cardNumber" ng-pattern="/^[0-9]{16}$/" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }" required>
+                                                    <div ng-messages="ctrl.paymentForm.cardNumber.$error" ng-if="ctrl.paymentForm.cardNumber.$touched || ctrl.submitted" md-auto-hide="false">
+                                                        <div ng-message="required" class="error-message">Este campo es requerido</div>
+                                                        <div ng-message="pattern" class="error-message">Debe tener 16 dígitos (sólo números)</div>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="sctn-row">
                                                 <div class="sctn-col l">
                                                     <label>Fecha de expiración</label>
-                                                    <div class="sctn-col half l"><input type="text" placeholder="Mes" ng-model="ctrl.card.expirationMonth" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }"></div>
-                                                    <div class="sctn-col half l"><input type="text" placeholder="Año" ng-model="ctrl.card.expirationYear" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }"></div>
+                                                    <div class="sctn-col half l">
+                                                        <input type="text" name="expirationMonth" placeholder="Mes" ng-model="ctrl.card.expirationMonth" ng-pattern="/^[0-9]{2}$/" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }" required>
+                                                        <span style="padding-top: 14px; padding-left:22px;">/</span>
+                                                        <div ng-messages="ctrl.paymentForm.expirationMonth.$error" ng-if="ctrl.paymentForm.expirationMonth.$touched || ctrl.submitted" md-auto-hide="false">
+                                                            <div ng-message="required" class="error-message">Este campo es requerido</div>
+                                                            <div ng-message="pattern" class="error-message">Debe tener 2 dígitos</div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="sctn-col half l">
+                                                        <input type="text" name="expirationYear" placeholder="Año" ng-model="ctrl.card.expirationYear" ng-pattern="/^[0-9]{2}$/" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }" required>
+                                                        <div ng-messages="ctrl.paymentForm.expirationYear.$error" ng-if="ctrl.paymentForm.expirationYear.$touched || ctrl.submitted" md-auto-hide="false">
+                                                            <div ng-message="required" class="error-message">Este campo es requerido</div>
+                                                            <div ng-message="pattern" class="error-message">Debe tener 2 dígitos</div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div class="sctn-col cvv"><label>Código de seguridad</label>
-                                                    <div class="sctn-col half l"><input type="text" placeholder="3 dígitos" autocomplete="off" ng-model="ctrl.card.cvv2" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }"></div>
+                                                    <div class="sctn-col half l">
+                                                        <input type="text" name="cvv2" placeholder="3 ó 4 dígitos" autocomplete="off" ng-model="ctrl.card.cvv2" ng-pattern="/^[0-9]{3,4}$/" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }" required>
+                                                        <div ng-messages="ctrl.paymentForm.cvv2.$error" ng-if="ctrl.paymentForm.cvv2.$touched || ctrl.submitted" md-auto-hide="false">
+                                                            <div ng-message="required" class="error-message">Este campo es requerido</div>
+                                                            <div ng-message="pattern" class="error-message">Debe tener 3 ó 4 dígitos</div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="openpay"><div class="logo">Transacciones realizadas vía:</div>
@@ -195,7 +236,7 @@
                                             </div>
                                             <div class="sctn-row" layout="row" layout-align="end center">
                                                 <md-progress-circular class="button-loader" md-mode="indeterminate" md-diameter="40" ng-if="ctrl.loading"></md-progress-circular>
-                                                <a class="button rght" ng-click="ctrl.processCardPayment()" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }">Pagar</a>
+                                                <button class="button rght" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }">Pagar</button>
                                             </div>
                                         </div>
                                     </div>
@@ -211,7 +252,7 @@
                                             </p>
                                             <div class="sctn-row" layout="row" layout-align="end center" style="height: 40px">
                                                 <md-progress-circular class="button-loader" md-mode="indeterminate" md-diameter="40" ng-if="ctrl.loading"></md-progress-circular>
-                                                <a class="button rght" ng-click="ctrl.processStorePayment()" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }">Generar formato de pago</a>
+                                                <button class="button rght" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }">Generar formato de pago</button>
                                             </div>
                                         </div>
                                     </div>
@@ -225,11 +266,16 @@
             <div ng-if="ctrl.showSuccess">
                 <md-content>
                     <div class="pymnt-itm card active">
-                        <h2>¡Recibimos tu pago!</h2>
+                        <h2>Recibimos tu pago</h2>
                         <div class="pymnt-cntnt successful-payment">
                             <p class="instructions">
-                                Hemos recibido un pago a tu nombre.<br>Gracias por confiar en nosotros. <br><br>Tu número de referencia es: {{ ctrl.reference }}
+                                ¡Gracias! Todo salió perfecto.<br><br>
+                                Te esperamos en tu consulta.
                             </p>
+                            <div class="action-button-container">
+                                <a href="./index.html" class="action-button" target="_self">Volver al inicio</a>
+                            </div>
+
                         </div>
                     </div>
                 </md-content>

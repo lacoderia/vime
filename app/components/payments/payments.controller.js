@@ -1,7 +1,7 @@
 (function(angular) {
     'use strict';
 
-    angular.module('vime').controller('paymentsController', ['$window', 'paymentsService', 'OPENPAY_DASHBOARD_URL', 'MERCHAND_ID', function($window, paymentsService, OPENPAY_DASHBOARD_URL, MERCHAND_ID){
+    angular.module('vime').controller('paymentsController', ['$scope', '$window', 'paymentsService', 'OPENPAY_DASHBOARD_URL', 'MERCHAND_ID', function($scope, $window, paymentsService, OPENPAY_DASHBOARD_URL, MERCHAND_ID){
 
         var ctrl = this;
 
@@ -25,16 +25,18 @@
         };
 
         ctrl.card = {
-            'cardNumber': '4242424242424242',
-            'holderName': 'Ricardo Rosas',
-            'expirationYear': '17',
-            'expirationMonth': '03',
-            'cvv2': '123'
+            'cardNumber': '',
+            'holderName': '',
+            'expirationYear': '',
+            'expirationMonth': '',
+            'cvv2': ''
         };
 
         ctrl.reference = '';
 
         ctrl.selectedPaymentTab = 0;
+
+        ctrl.submitted = false;
         ctrl.loading = false;
         ctrl.showSuccess = false;
 
@@ -57,6 +59,8 @@
         };
 
         ctrl.updatePaymentOption = function(){
+            ctrl.submitted = false;
+
             if(ctrl.radioButtons.paymentOption == 'card'){
                 ctrl.selectedPaymentTab = 0;
             } else {
@@ -64,79 +68,100 @@
             }
         };
 
-        ctrl.processCardPayment = function(){
+        ctrl.processPayment = function() {
+            ctrl.submitted = true;
 
-            ctrl.loading = true;
+            if(ctrl.radioButtons.paymentOption == 'card'){
+                processCardPayment();
+            } else {
+                processStorePayment();
+            }
+        };
 
-            var deviceSessionId = OpenPay.deviceData.setup();
+        var processCardPayment = function(){
 
-            OpenPay.token.create({
-                    "card_number": ctrl.card.cardNumber,
-                    "holder_name": ctrl.card.holderName,
-                    "expiration_year": ctrl.card.expirationYear,
-                    "expiration_month": ctrl.card.expirationMonth,
-                    "cvv2": ctrl.card.cvv2
-                },
-                function(response){
-                    tokenId = response.data.id;
+            if(ctrl.customerForm.$valid && ctrl.paymentForm.$valid){
+                ctrl.loading = true;
 
-                    var formData = {
-                        'method': 'store',
-                        'name': ctrl.customer.name,
-                        'last_name': ctrl.customer.lastName,
-                        'phone_number': ctrl.customer.phone,
-                        'email': ctrl.customer.email,
-                        'amount': ctrl.paymentData.amount,
-                        'description': ctrl.paymentData.description,
-                        'source_id': tokenId,
-                        'device_session_id': deviceSessionId
-                    };
+                var deviceSessionId = OpenPay.deviceData.setup();
 
-                    paymentsService.processPayment(formData)
-                        .then(function(data) {
-                            if(data.id){
-                                ctrl.reference = data.serializableData.payment_method.reference;
-                                ctrl.showSuccess = true;
-                            }
-                        }, function(error) {
-                            console.log('error');
-                        })
-                        .finally(function(){
-                            ctrl.loading = false;
-                        });
-                },
-                function(response){
-                    var desc = response.data.description != undefined ? response.data.description : response.message;
-                    alert('ERROR [' + response.status + ']'  + desc);
-                });
+                OpenPay.token.create({
+                        "card_number": ctrl.card.cardNumber,
+                        "holder_name": ctrl.card.holderName,
+                        "expiration_year": ctrl.card.expirationYear,
+                        "expiration_month": ctrl.card.expirationMonth,
+                        "cvv2": ctrl.card.cvv2
+                    },
+                    function(response){
+                        tokenId = response.data.id;
+
+                        var formData = {
+                            'method': 'store',
+                            'name': ctrl.customer.name,
+                            'last_name': ctrl.customer.lastName,
+                            'phone_number': ctrl.customer.phone,
+                            'email': ctrl.customer.email,
+                            'amount': ctrl.paymentData.amount,
+                            'description': ctrl.paymentData.description,
+                            'source_id': tokenId,
+                            'device_session_id': deviceSessionId
+                        };
+
+                        paymentsService.processPayment(formData)
+                            .then(function(data) {
+                                if(data.id){
+                                    ctrl.reference = data.serializableData.payment_method.reference;
+                                    ctrl.showSuccess = true;
+                                }
+                            }, function(error) {
+                                console.log('Ocurrió un error al procesar el pago. Intenta más tarde.');
+                            })
+                            .finally(function(){
+                                ctrl.loading = false;
+                            });
+                    },
+                    function(response){
+                        ctrl.loading = false;
+
+                        var desc = response.data.description != undefined ? response.data.description : response.message;
+                        alert(desc);
+                    });
+            } else {
+                alert('Completa todos los datos antes de continuar.')
+            }
 
         };
 
-        ctrl.processStorePayment = function(){
+        var processStorePayment = function(){
 
-            ctrl.loading = true;
+            if(ctrl.customerForm.$valid){
+                ctrl.loading = true;
 
-            var formData = {
-                'method': 'store',
-                'name': ctrl.customer.name,
-                'last_name': ctrl.customer.lastName,
-                'phone_number': ctrl.customer.phone,
-                'email': ctrl.customer.email,
-                'amount': ctrl.paymentData.amount,
-                'description': ctrl.paymentData.description
-            };
+                var formData = {
+                    'method': 'store',
+                    'name': ctrl.customer.name,
+                    'last_name': ctrl.customer.lastName,
+                    'phone_number': ctrl.customer.phone,
+                    'email': ctrl.customer.email,
+                    'amount': ctrl.paymentData.amount,
+                    'description': ctrl.paymentData.description
+                };
 
-            paymentsService.processPayment(formData)
-                .then(function(data) {
-                    if(data.id){
-                        $window.open(OPENPAY_DASHBOARD_URL + '/paynet-pdf/' + MERCHAND_ID + '/' + data.serializableData.payment_method.reference);
-                    }
-                }, function(error) {
-                    console.log('Error');
-                })
-                .finally(function(){
-                    ctrl.loading = false;
-                });
+                paymentsService.processPayment(formData)
+                    .then(function(data) {
+                        if(data.id){
+                            $window.open(OPENPAY_DASHBOARD_URL + '/paynet-pdf/' + MERCHAND_ID + '/' + data.serializableData.payment_method.reference);
+                        }
+                    }, function(error) {
+                        alert('Ocurrió un error al generar la ficha de pago. Intenta más tarde.');
+                    })
+                    .finally(function(){
+                        ctrl.loading = false;
+                    });
+            } else {
+                alert('Completa todos los datos antes de continuar.')
+            }
+
         };
 
     }]);

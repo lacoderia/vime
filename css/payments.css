@@ -217,62 +217,30 @@ strong {
     display: block;
     text-decoration: none;
 }
-.bkng-tb-cntnt a.button {
+.bkng-tb-cntnt button {
+    background: #FF558F;
     border-radius: 5px 5px 5px 5px;
     -webkit-border-radius: 5px 5px 5px 5px;
     -moz-border-radius: 5px 5px 5px 5px;
-    text-align: center;
-    font-size: 21px;
-    font-weight: 400;
-    padding: 12px 0;
-    width: 100%;
+    border-style: none;
+    color: #fff;
     display: table;
-    background: #FF558F;
+    font-size: 18px;
+    font-weight: 400;
+    outline: none;
+    padding: 5px 20px;
+    text-align: center;
+    width: auto;
 }
-.bkng-tb-cntnt a.button i {
-    margin-right: 10px;
-}
-.bkng-tb-cntnt a.button.disabled {
-    background: none repeat scroll 0 0 #ccc;
+.bkng-tb-cntnt button.disabled {
+    background: #ccc;
     cursor: default;
 }
 .bkng-tb-cntnt {
     display: inline-block;
     margin-bottom: 25px;
-    margin-top: 25px;
+    margin-top: 70px;
     width: 800px;
-}
-
-.bkng-tb-cntnt a.button {
-    color: #fff;
-    font-size: 18px;
-    padding: 5px 20px;
-    width: auto;
-}
-.bkng-tb-cntnt a.button.o {
-    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
-    color: #e51f04;
-    border: 1px solid #e51f04;
-}
-.bkng-tb-cntnt a.button i {
-    color: #fff;
-}
-.bkng-tb-cntnt a.button.o i {
-    color: #e51f04;
-}
-.bkng-tb-cntnt a.button.right i {
-    float: right;
-    margin: 2px 0 0 10px;
-}
-.bkng-tb-cntnt a.button.left {
-    float: left;
-}
-.bkng-tb-cntnt a.button.disabled.o {
-    border-color: #ccc;
-    color: #ccc;
-}
-.bkng-tb-cntnt a.button.disabled.o i {
-    color: #ccc;
 }
 .pymnts {
     float: left;
@@ -376,7 +344,7 @@ strong {
     width: 113px;
 }
 .pymnt-cntnt div.sctn-row div.sctn-col.cvv {
-    background-image: url("./cvv.png");
+    background-image: url("../images/cvv.png");
     background-position: 156px center;
     background-repeat: no-repeat;
     padding-bottom: 30px;
@@ -465,12 +433,38 @@ md-radio-group md-radio-button:not(:first-child) {
     width: 800px;
 }
 
-.bkng-tb-cntnt a.button.disabled {
-    background: #ccc;
-}
-
 .sctn-col .error-message {
     color: rgb(221, 44, 0);
     font-size: 14px;
     margin-top: 8px;
+}
+
+a.action-button {
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+}
+a.action-button {
+    border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    -moz-border-radius: 5px 5px 5px 5px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 400;
+    padding: 12px 0;
+    width: auto;
+    display: table;
+    background: #22DAC3;
+    padding: 8px 16px;
+    color: white;
+}
+
+.action-button-container {
+    text-align: center;
+    width: 100%;
+}
+
+.action-button-container .action-button {
+    display: inline-block;
+    float: none;
 }
