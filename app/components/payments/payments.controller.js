@@ -18,10 +18,10 @@
         };
 
         ctrl.customer = {
-            'name': 'Juan',
-            'lastName': 'Pérez',
-            'email': 'juan@perez.com',
-            'phone': '4423456723'
+            'name': '',
+            'lastName': '',
+            'email': '',
+            'phone': ''
         };
 
         ctrl.card = {

@@ -300,7 +300,7 @@ strong {
     width: 333px;
 }
 .sctn-col input.disabled {
-    color: #999;
+    color: #666;
 }
 .sctn-col label {
     font-size: 14px;
@@ -467,4 +467,10 @@ md-radio-group md-radio-button:not(:first-child) {
 
 .bkng-tb-cntnt a.button.disabled {
     background: #ccc;
+}
+
+.sctn-col .error-message {
+    color: rgb(221, 44, 0);
+    font-size: 14px;
+    margin-top: 8px;
 }
