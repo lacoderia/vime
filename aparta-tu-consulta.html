@@ -89,9 +89,9 @@
 
         <div id="wb_pagosText2" style="width:540px;height:101px;z-index:5;text-align:left;">
             <span class="texto">
-                ¿Ya te dimos fecha y hora para tu consulta?* ¡Perfecto! <br><br>
-                Entonces reserva tu lugar. Es muy fácil ya que puedes pagar en línea con tarjeta de crédito o débito; o también puedes hacerlo en tiendas de conveniencia.<br><br><br>
-                * Si aún no tienes fecha y hora  para tu consulta, llena el <a href="./index.html" style="color: #8C8C8C; font-weight: 800">formulario</a> para solicitarla
+                ¿Ya te dimos fecha y hora para tu <span style="font-size:17px;font-family:'futura md bt';">consulta</span>?* ¡Perfecto! <br><br>
+                <span style="font-size:17px;font-family:'futura md bt';">Entonces reserva tu lugar</span>. Es muy <span style="font-size:17px;font-family:'futura md bt';">fácil</span> ya que puedes pagar en línea con tarjeta de crédito o débito; o también puedes hacerlo en tiendas de conveniencia.<br><br><br>
+                * Si aún no tienes fecha y hora para tu consulta, llámanos a los teléfonos: <br>5335 0655 o 6725 5507. O bien, llena el <a href="./index.html" style="color:#8C8C8C;font-weight:800;font-size:17px;font-family:'futura md bt';">formulario</a> y nos comunicaremos contigo.
             </span>
         </div>
     </div>
@@ -167,7 +167,7 @@
                             <label>¿Cómo deseas pagar?</label>
                             <md-radio-group ng-model="ctrl.radioButtons.paymentOption" ng-change="ctrl.updatePaymentOption()">
                                 <md-radio-button value="card">Tarjeta de crédito o débito</md-radio-button>
-                                <md-radio-button value="store">Tienda de conveniencia (7Eleven, Farmacias del Ahorro, etc)</md-radio-button>
+                                <md-radio-button value="store">Tiendas de conveniencia</md-radio-button>
                             </md-radio-group>
                         </div>
                     </div>
@@ -195,10 +195,10 @@
                                                 </div>
                                                 <div class="sctn-col">
                                                     <label>Número de tarjeta</label>
-                                                    <input type="text" name="cardNumber" autocomplete="off" ng-model="ctrl.card.cardNumber" ng-pattern="/^[0-9]{16}$/" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }" required>
+                                                    <input type="text" name="cardNumber" autocomplete="off" ng-model="ctrl.card.cardNumber" ng-pattern="/^[0-9]{15,16}$/" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }" required>
                                                     <div ng-messages="ctrl.paymentForm.cardNumber.$error" ng-if="ctrl.paymentForm.cardNumber.$touched || ctrl.submitted" md-auto-hide="false">
                                                         <div ng-message="required" class="error-message">Este campo es requerido</div>
-                                                        <div ng-message="pattern" class="error-message">Debe tener 16 dígitos (sólo números)</div>
+                                                        <div ng-message="pattern" class="error-message">Debe tener 15 o 16 dígitos (sólo números)</div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -223,10 +223,10 @@
                                                 </div>
                                                 <div class="sctn-col cvv"><label>Código de seguridad</label>
                                                     <div class="sctn-col half l">
-                                                        <input type="text" name="cvv2" placeholder="3 ó 4 dígitos" autocomplete="off" ng-model="ctrl.card.cvv2" ng-pattern="/^[0-9]{3,4}$/" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }" required>
+                                                        <input type="text" name="cvv2" placeholder="3 o 4 dígitos" autocomplete="off" ng-model="ctrl.card.cvv2" ng-pattern="/^[0-9]{3,4}$/" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }" required>
                                                         <div ng-messages="ctrl.paymentForm.cvv2.$error" ng-if="ctrl.paymentForm.cvv2.$touched || ctrl.submitted" md-auto-hide="false">
                                                             <div ng-message="required" class="error-message">Este campo es requerido</div>
-                                                            <div ng-message="pattern" class="error-message">Debe tener 3 ó 4 dígitos</div>
+                                                            <div ng-message="pattern" class="error-message">Debe tener 3 o 4 dígitos</div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -248,8 +248,16 @@
                                         <h2>En tienda</h2>
                                         <div class="pymnt-cntnt">
                                             <p class="instructions">
-                                                Para realizar el pago en una tienda de autoservicio es necesario que generes e imprimas tu formato de pago.
+                                                Para tu comodidad, puedes elegir una de las siguientes tiendas para realizar tu pago:
                                             </p>
+                                            <div class="logos">
+                                                <img src="images/711.jpg" alt="7Eleven" style="height:45px;">
+                                                <img src="images/farmaciasdelahorro.jpg" alt="Farmacias del Ahorro" style="height:45px;">
+                                                <img src="images/farmaciasbena.jpg" alt="Farmacias Benavides" style="height:45px;">
+                                                <img src="images/extra.jpg" alt="Extra" style="height:45px;">
+                                                <img src="images/circulo_k.jpg" alt="Círculo K" style="height:45px;">
+                                                <img src="images/waldos.jpg" alt="Waldos" style="height:45px;">
+                                            </div><br>
                                             <div class="sctn-row" layout="row" layout-align="end center" style="height: 40px">
                                                 <md-progress-circular class="button-loader" md-mode="indeterminate" md-diameter="40" ng-if="ctrl.loading"></md-progress-circular>
                                                 <button class="button rght" ng-disabled="ctrl.loading" ng-class="{ 'disabled': ctrl.loading }">Generar formato de pago</button>
@@ -260,17 +268,17 @@
                             </md-tab>
                         </md-tabs>
                     </md-content>
-
                 </div>
             </form>
             <div ng-if="ctrl.showSuccess">
                 <md-content>
                     <div class="pymnt-itm card active">
-                        <h2>Recibimos tu pago</h2>
+                        <h2>¡Gracias! Todo salió perfecto</h2>
                         <div class="pymnt-cntnt successful-payment">
                             <p class="instructions">
-                                ¡Gracias! Todo salió perfecto.<br><br>
-                                Te esperamos en tu consulta.
+                                Tu número de confirmación es: {{ ctrl.reference }}<br><br>
+                                Por favor, envíanos dicho número y tu nombre para que tu consulta quede reservada. <br>Escríbenos a contacto@vime.mx, o si lo prefieres, llámanos a 5335 0655 o 6725 5507.<br><br>
+                                ¡Te esperamos en Vime!
                             </p>
                             <div class="action-button-container">
                                 <a href="./index.html" class="action-button" target="_self">Volver al inicio</a>

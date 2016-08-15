@@ -96,7 +96,7 @@
                         tokenId = response.data.id;
 
                         var formData = {
-                            'method': 'store',
+                            'method': 'card',
                             'name': ctrl.customer.name,
                             'last_name': ctrl.customer.lastName,
                             'phone_number': ctrl.customer.phone,
@@ -114,7 +114,7 @@
                                     ctrl.showSuccess = true;
                                 }
                             }, function(error) {
-                                console.log('Ocurrió un error al procesar el pago. Intenta más tarde.');
+                                alert(error.message);
                             })
                             .finally(function(){
                                 ctrl.loading = false;
@@ -122,6 +122,7 @@
                     },
                     function(response){
                         ctrl.loading = false;
+                        $scope.$apply();
 
                         var desc = response.data.description != undefined ? response.data.description : response.message;
                         alert(desc);

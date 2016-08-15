@@ -153,7 +153,9 @@ body
 .texto {
     color:#888888;
     font-family:'futura bk bt';
-    font-size:15px
+    font-size: 15px;
+    -webkit-font-smoothing: auto !important;
+    -moz-osx-font-smoothing: auto !important;
 }
 
 #pagosLayer3 {
@@ -425,6 +427,19 @@ md-radio-group md-radio-button:not(:first-child) {
 
 .payment-tabs .instructions {
     padding: 20px 50px;
+}
+
+.payment-tabs .logos {
+    clear: both;
+    display: block;
+    float: none;
+    text-align: center;
+    width: 100%;
+}
+
+.payment-tabs .logos img {
+    display: inline-block;
+    float: none;
 }
 
 .successful-payment .instructions {
