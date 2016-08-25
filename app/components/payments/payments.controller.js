@@ -109,8 +109,9 @@
 
                         paymentsService.processPayment(formData)
                             .then(function(data) {
+                                console.log(data);
                                 if(data.id){
-                                    ctrl.reference = data.serializableData.payment_method.reference;
+                                    ctrl.reference = data.id;
                                     ctrl.showSuccess = true;
                                 }
                             }, function(error) {
