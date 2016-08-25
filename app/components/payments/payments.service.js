@@ -7,7 +7,7 @@
             var openpayServiceURL = API_URL + '/services/pago.php';
             return $http.post(openpayServiceURL, { formData: formData })
                 .then(function(response) {
-                    var data = response.data;
+                    var data = response.data.message;
                     if (typeof data === 'object') {
                         return data;
                     } else {
