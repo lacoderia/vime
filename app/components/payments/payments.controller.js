@@ -109,7 +109,6 @@
 
                         paymentsService.processPayment(formData)
                             .then(function(data) {
-                                console.log(data);
                                 if(data.id){
                                     ctrl.reference = data.id;
                                     ctrl.showSuccess = true;
