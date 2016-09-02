@@ -12,7 +12,7 @@ if (!function_exists('http_response_code'))
             header('X-PHP-Response-Code: '.$newcode, true, $newcode);
             if(!headers_sent())
                 $code = $newcode;
-        }       
+        }
         return $code;
     }
 }
@@ -27,13 +27,14 @@ function json_response_internal($message = null, $code = 200) {
     header('Content-Type: application/json');
     $status = array(
         200 => '200 OK',
+        420 => '420 El monto no puede exceder los $5000.00',
         500 => '500 Internal Server Error'
     );
 
     header('Status: '.$status[$code]);
 
     return json_encode(array(
-        'status' => $code < 300, // success or not?
+        'status' => $code,
         'message' => $message
     ));
 }
@@ -45,10 +46,10 @@ $request = json_decode($postdata);
 $data = $request->formData;
 
 $customer = array(
-     'name' => $data->name,
-     'last_name' => $data->last_name,
-     'phone_number' => $data->phone_number,
-     'email' => $data->email);
+    'name' => $data->name,
+    'last_name' => $data->last_name,
+    'phone_number' => $data->phone_number,
+    'email' => $data->email);
 
 if ($data->method == 'card') {
     $chargeData = array(
@@ -67,11 +68,16 @@ if ($data->method == 'card') {
         'customer' => $customer);
 }
 
-try{
-    $charge = $openpay->charges->create($chargeData);
-    echo str_replace("\u0000*\u0000", "", json_response_internal((array)$charge));
-}catch (Exception $e){
-    echo str_replace("\u0000*\u0000", "", json_response_internal($e->getMessage(), 500) );
+if($chargeData['amount'] > 5000) {
+    echo str_replace("\u0000*\u0000", "", json_response_internal('La cantidad a cobrar no puede ser mayor a $5000', 420) );
+
+} else {
+    try{
+        $charge = $openpay->charges->create($chargeData);
+        echo str_replace("\u0000*\u0000", "", json_response_internal((array)$charge));
+    }catch (Exception $e){
+        echo str_replace("\u0000*\u0000", "", json_response_internal($e->getMessage(), 500) );
+    }
 }
 
 ?>

@@ -154,7 +154,8 @@
                             $window.open(OPENPAY_DASHBOARD_URL + '/paynet-pdf/' + MERCHAND_ID + '/' + data.serializableData.payment_method.reference);
                         }
                     }, function(error) {
-                        alert('Ocurrió un error al generar la ficha de pago. Intenta más tarde.');
+                        var desc = error.status == 420 ? error.message : 'Ocurrió un error al generar la ficha de pago. Intenta más tarde.';
+                        alert(desc);
                     })
                     .finally(function(){
                         ctrl.loading = false;
